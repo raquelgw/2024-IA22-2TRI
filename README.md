@@ -1,5 +1,7 @@
 # Iniciando um projeto Node.js com TypeScript
 
+### Crie uma conta no GitHub:
+- Se você ainda não tem uma conta, acesse github.com e crie uma.
 Crie um diretório para o projeto e acesse-o pelo vscode, abra o terminal e siga os passos abaixo.
 
 ```bash
