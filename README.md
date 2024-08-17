@@ -2,7 +2,21 @@
 
 ### Crie uma conta no GitHub:
 - Se você ainda não tem uma conta, acesse github.com e crie uma.
-Crie um diretório para o projeto e acesse-o pelo vscode, abra o terminal e siga os passos abaixo.
+
+### Crie um Repositório no GitHub:
+No GitHub, clique no botão New para criar um novo repositório.
+<img src ="imagens/new.png">
+- Dê um nome ao seu repositório.
+- Selecione a opção **Public** (para que todos possam ver).
+- Clique em “adicionar um arquivo README” caso queira escrever uma descrição para seu projeto.
+- Clique em **Create repository**.
+<img src ="imagens/repository.png">
+- Após criar um repositório clique em “<> code”
+<img src ="imagens/code.png">
+- Clique em “Create codespace on main” para iniciar o projeto.
+<img src ="imagens/codespace.png">
+- Abra o terminal com o comando CTRL + ‘
+- Execute os seguintes comandos no terminal para configurar o projeto:
 
 ```bash
 npm init -y
@@ -15,7 +29,10 @@ touch src/app.ts
 
 ## Configuranado o `tsconfig.json`
 
-Mude a linha ```"outDir": "./",``` para ```"outDir": "./dist",``` e adicione a linha ```"rootDir": "./src",```, seu arquivo de configuração do compilador do TypeScript ficará mais ou menos assim.
+- Abra o arquivo tsconfig.json.
+- Altere a linha "outDir": "./", para "outDir": "./dist",.
+- Adicione a linha "rootDir": "./src", logo abaixo.
+- O arquivo final deve parecer com isto:
 
 ```json
 {
