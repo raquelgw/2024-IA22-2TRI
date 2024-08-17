@@ -1,192 +1,173 @@
 # Iniciando um projeto Node.js com TypeScript
 
-### Crie uma conta no GitHub:
-- Se você ainda não tem uma conta, acesse github.com e crie uma.
+Crie um diretório para o projeto e acesse-o pelo vscode, abra o terminal e siga os passos abaixo.
 
-### Crie um Repositório no GitHub:
-No GitHub, clique no botão New para criar um novo repositório.
-<img src ="imagens/new.png">
-- Dê um nome ao seu repositório.
-- Selecione a opção **Public** (para que todos possam ver).
-- Clique em “adicionar um arquivo README” caso queira escrever uma descrição para seu projeto.
-- Clique em **Create repository**.
-<img src ="imagens/repository.png">
-- Após criar um repositório clique em “<> code”
-<img src ="imagens/code.png">
-- Clique em “Create codespace on main” para iniciar o projeto.
-<img src ="imagens/codespace.png">
-- Abra o terminal com o comando CTRL + ‘
-- Execute os seguintes comandos no terminal para configurar o projeto:
-
-```bash
+``` bater
 npm init -y
-npm install express cors sqlite3 sqlite
-npm install --save-dev typescript nodemon ts-node @types/express @types/cors
+npm instalar express cors sqlite3 sqlite
+npm install --save-dev typescript nodemon ts-node @tipos/express @tipos/cors
 npx tsc --init
-mkdir src
-touch src/app.ts
+mkdir fonte
+toque em src/app.ts
 ```
 
-## Configuranado o `tsconfig.json`
+## Configurado ou ` tsconfig.json `
 
-- Abra o arquivo tsconfig.json.
-- Altere a linha "outDir": "./", para "outDir": "./dist",.
-- Adicione a linha "rootDir": "./src", logo abaixo.
-- O arquivo final deve parecer com isto:
+Mude a linha ``` "outDir": "./", ``` para ``` "outDir": "./dist", ``` e adicione a linha ``` "rootDir": "./src ", ``` , seu arquivo de configuração do compilador do TypeScript ficará mais ou menos assim.
 
-```json
+``` json
 {
-  "compilerOptions": {
-    "target": "ES2017",
-    "module": "commonjs",
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+  "compilerOptions" : {
+    "alvo" : " ES2017 " ,
+    "módulo" : " commonjs " ,
+    "outDir" : " ./dist " ,
+    "rootDir" : " ./src " ,
+    "strict" : verdadeiro ,
+    "esModuleInterop" : verdadeiro ,
+    "skipLibCheck" : verdadeiro ,
+    "forceConsistentCasingInFileNames" : verdadeiro
   }
 }
 ```
 
-## Configurando o `package.json`
+## Configurando o ` package.json `
 
-Adicione o seguinte script ao seu `package.json`
+Adicione o seguinte script ao seu ` package.json `
 
-```json
-"scripts": {
-  "dev": "npx nodemon src/app.ts"
+``` json
+"scripts" : {
+  "dev" : " npx nodemon src/app.ts "
 }
 ```
 
 ## Criando arquivo inicial do servidor
 
-Adicione o seguinte código ao arquivo `src/app.ts`
+Adicione o seguinte código ao arquivo ` src/app.ts `
 
-```typescript
-import express from 'express';
-import cors from 'cors';
+``` datilografado
+importar  expresso  de  ' expresso ' ;
+importar  cors  de  ' cors ' ;
 
-const port = 3333;
-const app = express();
+const porta =  3333 ;
+const app =  express ();
 
-app.use(cors());
-app.use(express.json());
+aplicativo . usar ( cors ());
+aplicativo . usar ( express . json ());
 
-app.get('/', (req, res) => {
-  res.send('Hello World');
+aplicativo . obter ( ' / ' , ( req , res ) => {
+  res . enviar ( ' Olá Mundo ' );
 });
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+aplicativo . ouvir ( porta , () => {
+  console . log ( ` Servidor em execução na porta ${ porta } ` );
 });
 ```
 
 ## Inicializando o servidor
 
-```bash
-npm run dev
+``` bater
+npm executar dev
 ```
 
-Se tudo ocorrer bem, você verá a mensagem `Server running on port 3333` no terminal.
+Se tudo acontecer bem, você verá a mensagem ` Servidor rodando na porta 3333` no terminal.
 
 ## Testando o servidor
 
-Abra o navegador e acesse `http://localhost:3333`, você verá a mensagem `Hello World`.
+Abra o navegador e acesse ` http://localhost:3333` , você verá a mensagem ` Hello World` .
 
 ## Configurando o banco de dados
 
-Crie um arquivo `database.ts` dentro da pasta `src` e adicione o seguinte código.
+Crie um arquivo ` database.ts ` dentro da pasta ` src ` e adicione o seguinte código.
 
-```typescript
-import { open } from 'sqlite';
-import sqlite3 from 'sqlite3';
+``` datilografado
+importar { abrir } de  ' sqlite ' ;
+importar  sqlite3  de  ' sqlite3 ' ;
 
-let instance: sqlite3.Database | null = null;
+deixe instância :  sqlite3 . Banco de dados  |  nulo  =  nulo ;
 
-export async function connect() {
-  if (instance) return instance;
+exportar  função assíncrona  connect() {
+  se ( instância ) retornar  instância ;
 
-  const db = await open({
-     filename: './src/database.sqlite',
-     driver: sqlite3.Database
+  const db =  aguardar  abertura ({
+     nome do arquivo: ' ./src/database.sqlite ' ,
+     driver: sqlite3 . Banco de dados
    });
-  
-  await db.exec(`
-    CREATE TABLE IF NOT EXISTS users (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT,
-      email TEXT
-    )
-  `);
 
-  instance = db;
-  return db;
+  aguarde  db .exec ( `​
+    CRIAR TABELA SE NÃO EXISTIR usuários (
+      id CHAVE PRIMÁRIA INTEIRA AUTOINCREMENTO,
+      nome TEXTO,
+      e-mail TEXTO
+    )
+  ` );
+
+  instância  =  db ;
+  retornar  db ;
 }
 ```
 
 ## Adicionando o banco de dados ao servidor
 
-```typescript
-import express from 'express';
-import cors from 'cors';
-import { connect } from './database';
+``` datilografado
+importar  expresso  de  ' expresso ' ;
+importar  cors  de  ' cors ' ;
+importar { conectar } de  ' ./banco de dados ' ;
 
-const port = 3333;
-const app = express();
+const porta =  3333 ;
+const app =  express ();
 
-app.use(cors());
-app.use(express.json());
+aplicativo . usar ( cors ());
+aplicativo . usar ( express . json ());
 
-app.get('/', (req, res) => {
-  res.send('Hello World');
+aplicativo . obter ( ' / ' , ( req , res ) => {
+  res . enviar ( ' Olá Mundo ' );
 });
 
-app.post('/users', async (req, res) => {
-  const db = await connect();
-  const { name, email } = req.body;
+aplicativo . post ( ' /usuários ' , async ( req , res ) => {
+  const db =  aguarda  conexão ();
+  const { nome, email } =  req . corpo ;
 
-  const result = await db.run('INSERT INTO users (name, email) VALUES (?, ?)', [name, email]);
-  const user = await db.get('SELECT * FROM users WHERE id = ?', [result.lastID]);
+  const result =  await  db . run ( ' INSERT INTO users (nome, email) VALUES (?, ?) ' , [ nome , email ]);
+  const user =  await  db . get ( ' SELECIONE * DE usuários ONDE id = ? ' , [ resultado . lastID ]);
 
-  res.json(user);
+  res . json ( usuário );
 });
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+aplicativo . ouvir ( porta , () => {
+  console . log ( ` Servidor em execução na porta ${ porta } ` );
 });
 ```
 
 ## Testando a inserção de dados
 
-Abra o Postman e faça uma requisição POST para `http://localhost:3333/users` com o seguinte corpo.
+Abra o Postman e faça uma requisição POST para ` http://localhost:3333/users ` com o seguinte corpo.
 
-```json
+``` json
 {
-  "name": "John Doe",
-  "email": "
+  "nome" : " John Doe " ,
+  "e-mail" : "
 }
 ```
 
-Se tudo ocorrer bem, você verá a resposta com o usuário inserido.
+Se tudo ocorrer bem, você verá uma resposta com o usuário inserido.
 
-```json
+``` json
 {
-  "id": 1,
-  "name": "John Doe"
-  "email": "
+  "id" : 1 ,
+  "nome" : " John Doe "
+  "e-mail" : "
 }
 ```
 
 ## Listando os usuários
 
-Adicione a rota `/users` ao servidor.
+Adicione a rota ` /users ` ao servidor.
 
-```typescript
-app.get('/users', async (req, res) => {
-  const db = await connect();
-  const users = await db.all('SELECT * FROM users');
+``` datilografado
+aplicativo . obter ( ' /usuários ' , async ( req , res ) => {
+  const db =  aguarda  conexão ();
+  const usuários =  await  db . all ( ' SELECIONE * DE usuários ' );
 
-  res.json(users);
+  res . json ( usuários );
 });
 ```
