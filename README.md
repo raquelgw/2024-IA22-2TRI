@@ -171,3 +171,27 @@ aplicativo . obter ( ' /usuários ' , async ( req , res ) => {
   res . json ( usuários );
 });
 ```
+Editando um usuário
+Adicione a rota /users/:id ao servidor.
+
+app.put('/users/:id', async (req, res) => {
+  const db = await connect();
+  const { name, email } = req.body;
+  const { id } = req.params;
+
+  await db.run('UPDATE users SET name = ?, email = ? WHERE id = ?', [name, email, id]);
+  const user = await db.get('SELECT * FROM users WHERE id = ?', [id]);
+
+  res.json(user);
+});
+Deletando um usuário
+Adicione a rota /users/:id ao servidor.
+
+app.delete('/users/:id', async (req, res) => {
+  const db = await connect();
+  const { id } = req.params;
+
+  await db.run('DELETE FROM users WHERE id = ?', [id]);
+
+  res.json({ message: 'User deleted' });
+});
