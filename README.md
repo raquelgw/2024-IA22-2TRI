@@ -194,7 +194,9 @@ app.listen(port, () => {
 
 ## Testando a inserção de dados
 
-Abra o Postman e faça uma requisição POST para ` http://localhost:3333/users ` com o seguinte corpo.
+- Instale a extensão REST Client
+
+faça uma requisição POST para ` http://localhost:3333/users ` com o seguinte corpo.
 
 ``` json
 {
