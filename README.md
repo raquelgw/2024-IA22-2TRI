@@ -150,7 +150,8 @@ export async function connect() {
   instance = db;
   return db;
 
-}```
+}
+```
 
 ## Adicionando o banco de dados ao servidor
 
