@@ -154,34 +154,41 @@ export async function connect() {
 ```
 
 ## Adicionando o banco de dados ao servidor
+- No **app.ts** adicione o seguinte código: 
 
-``` datilografado
-importar  expresso  de  ' expresso ' ;
-importar  cors  de  ' cors ' ;
-importar { conectar } de  ' ./banco de dados ' ;
+``` import express from 'express';
+import cors from 'cors';
+import { connect } from './database';
 
-const porta =  3333 ;
-const app =  express ();
+const port = 3333;
+const app = express();
 
-aplicativo . usar ( cors ());
-aplicativo . usar ( express . json ());
+app.use(cors());
+app.use(express.json());
 
-aplicativo . obter ( ' / ' , ( req , res ) => {
-  res . enviar ( ' Olá Mundo ' );
+app.get('/', (req, res) => {
+  res.send('Hello World');
 });
 
-aplicativo . post ( ' /usuários ' , async ( req , res ) => {
-  const db =  aguarda  conexão ();
-  const { nome, email } =  req . corpo ;
+app.post('/users', async (req, res) => {
+  const db = await connect();
+  const { name, email } = req.body;
 
-  const result =  await  db . run ( ' INSERT INTO users (nome, email) VALUES (?, ?) ' , [ nome , email ]);
-  const user =  await  db . get ( ' SELECIONE * DE usuários ONDE id = ? ' , [ resultado . lastID ]);
+  const result = await db.run('INSERT INTO users (name, email) VALUES (?, ?)', [name, email]);
+  const user = await db.get('SELECT * FROM users WHERE id = ?', [result.lastID]);
 
-  res . json ( usuário );
+  res.json(user);
 });
 
-aplicativo . ouvir ( porta , () => {
-  console . log ( ` Servidor em execução na porta ${ porta } ` );
+app.get('/users', async (req, res) => {
+  const db = await connect();
+  const users = await db.all('SELECT * FROM users');
+
+  res.json(users);
+});
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
 ```
 
