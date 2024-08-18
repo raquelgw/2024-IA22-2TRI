@@ -154,7 +154,7 @@ export async function connect() {
 ```
 
 ## Adicionando o banco de dados ao servidor
-- No **app.ts** adicione o seguinte código: 
+- No **app.ts** exclua o conteúdo atual e adicione o novo código: 
 
 ``` import express from 'express';
 import cors from 'cors';
