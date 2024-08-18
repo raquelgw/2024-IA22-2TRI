@@ -126,32 +126,31 @@ Se tudo ocorrer bem, você verá a mensagem `Server running on port 3333` no ter
 
 Crie um arquivo ` database.ts ` dentro da pasta ` src ` e adicione o seguinte código.
 
-``` datilografado
-importar { abrir } de  ' sqlite ' ;
-importar  sqlite3  de  ' sqlite3 ' ;
+``` import { Database, open } from 'sqlite';
+import sqlite3 from 'sqlite3';
 
-deixe instância :  sqlite3 . Banco de dados  |  nulo  =  nulo ;
+let instance: Database | null = null;
 
-exportar  função assíncrona  connect() {
-  se ( instância ) retornar  instância ;
+export async function connect() {
+  if (instance) return instance;
 
-  const db =  aguardar  abertura ({
-     nome do arquivo: ' ./src/database.sqlite ' ,
-     driver: sqlite3 . Banco de dados
+  const db = await open({
+     filename: './src/database.sqlite',
+     driver: sqlite3.Database
    });
-
-  aguarde  db .exec ( `​
-    CRIAR TABELA SE NÃO EXISTIR usuários (
-      id CHAVE PRIMÁRIA INTEIRA AUTOINCREMENTO,
-      nome TEXTO,
-      e-mail TEXTO
+  
+  await db.exec(`
+    CREATE TABLE IF NOT EXISTS users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT,
+      email TEXT
     )
-  ` );
+  `);
 
-  instância  =  db ;
-  retornar  db ;
-}
-```
+  instance = db;
+  return db;
+
+}```
 
 ## Adicionando o banco de dados ao servidor
 
