@@ -188,14 +188,33 @@ export async function connect() {
 ## Testando a inserção de dados
 
 - Instale a extensão REST Client
-- No terminal, insira o comando touch teste.http. Isso criará um arquivo chamado teste. Abra este arquivo e insira o código a seguir:
+- No terminal, insira o comando touch teste.http. Isso criará um arquivo chamado teste. Abra este arquivo e insira o código a seguir: 
 
 ``` json
+POST LINK/users HTTP/1.1
+content-type: application/json
+
 {
-  "nome" : " John Doe " ,
-  "e-mail" : "
+  "name": "John Doe",
+  "email": "johndoe@mail.com"
+}
+
+PUT LINK/users/1 HTTP/1.1
+content-type: application/json
+
+{
+  "name": "John Doe Updated",
+  "email": "johndoe@mail.com"
+}
+
+DELETE LINK/users/1 HTTP/1.1
 }
 ```
+
+- Abra o terminal, acesse "Ports" e altere a visibilidade de "private" para "public".
+- Copie o endereço do link que está abaixo de "Forwarded Address" 
+- Substitua o texto >LINK< no seu código pelo endereço que você copiou. 
+- Clique na opção 'Send Request' acima da primeira linha do código.
 
 Se tudo ocorrer bem, você verá uma resposta com o usuário inserido.
 
@@ -206,40 +225,3 @@ Se tudo ocorrer bem, você verá uma resposta com o usuário inserido.
   "e-mail" : "
 }
 ```
-
-## Listando os usuários
-
-Adicione a rota ` /users ` ao servidor.
-
-``` datilografado
-aplicativo . obter ( ' /usuários ' , async ( req , res ) => {
-  const db =  aguarda  conexão ();
-  const usuários =  await  db . all ( ' SELECIONE * DE usuários ' );
-
-  res . json ( usuários );
-});
-```
-Editando um usuário
-Adicione a rota /users/:id ao servidor.
-
-app.put('/users/:id', async (req, res) => {
-  const db = await connect();
-  const { name, email } = req.body;
-  const { id } = req.params;
-
-  await db.run('UPDATE users SET name = ?, email = ? WHERE id = ?', [name, email, id]);
-  const user = await db.get('SELECT * FROM users WHERE id = ?', [id]);
-
-  res.json(user);
-});
-Deletando um usuário
-Adicione a rota /users/:id ao servidor.
-
-app.delete('/users/:id', async (req, res) => {
-  const db = await connect();
-  const { id } = req.params;
-
-  await db.run('DELETE FROM users WHERE id = ?', [id]);
-
-  res.json({ message: 'User deleted' });
-});
