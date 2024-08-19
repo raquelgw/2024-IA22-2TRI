@@ -1,40 +1,35 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="index.css">
-  <title>Grey's Anatomy</title>
+  <title>Document</title>
 </head>
 
 <body>
-  <div class="container">
-    <h1>Grey's Anatomy</h1>
-    <h3>Petição contra o fim da série</h3>
+  <form>
+    <input type="text" name="name" placeholder="Nome">
+    <input type="email" name="email" placeholder="Email">
+    <button type="submit">Cadastrar</button>
+  </form>
 
-    <form>
-      <input type="text" name="name" placeholder="Nome" required>
-      <input type="email" name="email" placeholder="Email" required>
-      <button type="submit">Cadastrar</button>
-    </form>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Id</th>
-          <th>Nome</th>
-          <th>Email</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!--  -->
-      </tbody>
-    </table>
-  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!--  -->
+    </tbody>
+  </table>
 
   <script>
+    // 
     const form = document.querySelector('form')
 
     form.addEventListener('submit', async (event) => {
@@ -53,6 +48,7 @@
       fetchData()
     })
 
+    // 
     const tbody = document.querySelector('tbody')
 
     async function fetchData() {
@@ -68,8 +64,8 @@
           <td>${user.name}</td>
           <td>${user.email}</td>
           <td>
-            <button class="excluir">Excluir</button>
-            <button class="editar">Editar</button>
+            <button class="excluir">excluir</button>
+            <button class="editar">editar</button>
           </td>
         `
 
@@ -101,4 +97,5 @@
     fetchData()
   </script>
 </body>
+
 </html>
