@@ -271,7 +271,8 @@ app.listen(port, () => {
 
 Crie um arquivo ` database.ts ` dentro da pasta ` src ` e adicione o seguinte código.
 
-``` import { open, Database } from 'sqlite';
+``` 
+import { open, Database } from 'sqlite';
 import sqlite3 from 'sqlite3';
 
 let instance: Database | null = null;
