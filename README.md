@@ -187,4 +187,138 @@ export async function connect() {
 ```
 ## Configuranado o HTML
 
+- Adicione este código no arquivo **index.html**
+
+
+```
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de Usuários</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f4f4f4;
+    }
+
+    button {
+      margin: 0 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Cadastro de Usuários</h1>
+
+  <form id="userForm">
+    <input type="text" name="name" placeholder="Nome" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <button type="submit">Cadastrar</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody id="userTableBody">
+      <!-- Conteúdo será inserido aqui -->
+    </tbody>
+  </table>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('userForm');
+      const tbody = document.getElementById('userTableBody');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+        const name = formData.get('name');
+        const email = formData.get('email');
+
+        await fetch('/users', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email })
+        });
+
+        form.reset();
+        loadUsers();
+      });
+
+      async function loadUsers() {
+        const response = await fetch('/users');
+        const users = await response.json();
+
+        tbody.innerHTML = '';
+
+        users.forEach(user => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${user.id}</td>
+            <td>${user.name}</td>
+            <td>${user.email}</td>
+            <td>
+              <button class="delete">Excluir</button>
+              <button class="edit">Editar</button>
+            </td>
+          `;
+
+          row.querySelector('.delete').addEventListener('click', async () => {
+            await fetch(`/users/${user.id}`, { method: 'DELETE' });
+            row.remove();
+          });
+
+          row.querySelector('.edit').addEventListener('click', async () => {
+            const newName = prompt('Novo nome:', user.name);
+            const newEmail = prompt('Novo email:', user.email);
+
+            if (newName && newEmail) {
+              await fetch(`/users/${user.id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: newName, email: newEmail })
+              });
+
+              loadUsers();
+            }
+          });
+
+          tbody.appendChild(row);
+        });
+      }
+
+      loadUsers();
+    });
+  </script>
+</body>
+
+</html>
+
+```
+
+
 
