@@ -195,8 +195,7 @@ app.listen(port, () => {
 ## Testando a inserção de dados
 
 - Instale a extensão REST Client
-
-faça uma requisição POST para ` http://localhost:3333/users ` com o seguinte corpo.
+- No terminal, insira o comando touch teste.http. Isso criará um arquivo chamado teste. Abra este arquivo e insira o código a seguir:
 
 ``` json
 {
