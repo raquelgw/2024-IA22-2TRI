@@ -35,8 +35,9 @@ touch src/app.ts
 
 
 - Abra o arquivo tsconfig.json.
-- Altere a linha "outDir": "./", para "outDir": "./dist",.
-- Adicione a linha "rootDir": "./src", logo abaixo.
+- Altere "outDir": "./", para "outDir": "./dist",.
+- Adicione "rootDir": "./src", logo abaixo.
+- Remova os // das linhas e adicione uma vírgula após cada linha.
 - O arquivo final deve parecer com isto:
 
 
