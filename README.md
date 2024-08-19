@@ -298,9 +298,6 @@ export async function connect() {
 }
 ```
 
-- Pressione Ctrl + Shift + G.
-- Clique em "Commit", adicione uma mensagem e depois confirme clicando no botão no canto superior esquerdo.
-- Clique em "Sync Changes".
 - No terminal, execute o comando abaixo:
 ```bash
 npm run dev
