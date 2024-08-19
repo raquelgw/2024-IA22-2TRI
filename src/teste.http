@@ -5,3 +5,13 @@ Content-Type: application/json
   "name": "John Doe",
   "email": "GHJKLÇ"
 }
+
+PUT https://musical-goggles-wp7w94wq5jx257px-3333.app.github.dev/users/1 HTTP/1.1
+content-type: application/json
+
+{
+  "name": "John Doe Updated",
+  "email": "johndoe@mail.com"
+}
+
+DELETE https://musical-goggles-wp7w94wq5jx257px-3333.app.github.dev/users/1 HTTP/1.1
