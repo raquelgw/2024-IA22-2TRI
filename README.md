@@ -185,44 +185,6 @@ export async function connect() {
 
 }
 ```
+## Configuranado o `index.html`
 
-## Testando a inserção de dados
 
-- Instale a extensão REST Client
-- No terminal, insira o comando touch teste.http. Isso criará um arquivo chamado teste. Abra este arquivo e insira o código a seguir: 
-
-``` json
-POST LINK/users HTTP/1.1
-content-type: application/json
-
-{
-  "name": "John Doe",
-  "email": "johndoe@mail.com"
-}
-
-PUT LINK/users/1 HTTP/1.1
-content-type: application/json
-
-{
-  "name": "John Doe Updated",
-  "email": "johndoe@mail.com"
-}
-
-DELETE LINK/users/1 HTTP/1.1
-}
-```
-
-- Abra o terminal, acesse "Ports" e altere a visibilidade de "private" para "public".
-- Copie o endereço do link que está abaixo de "Forwarded Address" 
-- Substitua o texto >LINK< no seu código pelo endereço que você copiou. 
-- Clique na opção 'Send Request' acima da primeira linha do código.
-
-Se tudo ocorrer bem, você verá uma resposta com o usuário inserido.
-
-``` json
-{
-  "id" : 1 ,
-  "nome" : " John Doe "
-  "e-mail" : "
-}
-```
