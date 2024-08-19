@@ -60,7 +60,7 @@ touch src/app.ts
 ## Configurando o `package.json`
 
 
-Adicione o seguinte script ao seu `package.json` dentro de "scripts":
+- Adicione o seguinte script ao seu `package.json` dentro de "scripts":
 
 
 ```json
@@ -71,7 +71,7 @@ Adicione o seguinte script ao seu `package.json` dentro de "scripts":
 ## Criando arquivo inicial do servidor
 
 
-Adicione o seguinte código ao arquivo `src/app.ts`
+- Adicione o seguinte código ao arquivo `src/app.ts`
 
 
 ```typescript
@@ -319,6 +319,3 @@ export async function connect() {
 </html>
 
 ```
-
-
-
