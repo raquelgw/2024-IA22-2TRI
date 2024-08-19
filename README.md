@@ -162,27 +162,6 @@ app.listen(port, () => {
 });
 ```
 
-## Inicializando o servidor
-
-
-- No terminal, execute o comando abaixo:
-```bash
-npm run dev
-```
-
-Se tudo ocorrer bem, você verá a mensagem `Server running on port 3333` no terminal.
-
-## Testando o servidor
-
-
-- Clique em "Ports" ao lado do terminal.
-- Após isto, abra no navegador.
-<img src ="imagens/ports.png">
-<img src ="imagens/browser.png">
-
-
- E você verá a mensagem `Hello World`.
-
 ## Configuranado o HTML
 
 - Crie uma pasta chamada "public" e crie um arquivo chamado "index.html"
@@ -322,4 +301,8 @@ Se tudo ocorrer bem, você verá a mensagem `Server running on port 3333` no ter
 - Pressione Ctrl + Shift + G.
 - Clique em "Commit", adicione uma mensagem e depois confirme clicando no botão no canto superior esquerdo.
 - Clique em "Sync Changes".
-- Atualize a página no navegador.
+
+- No terminal, execute o comando abaixo:
+```bash
+npm run dev
+```
