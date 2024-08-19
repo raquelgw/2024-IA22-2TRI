@@ -185,6 +185,7 @@ Se tudo ocorrer bem, você verá a mensagem `Server running on port 3333` no ter
 
 ## Configuranado o HTML
 
+- Crie uma pasta chamada "public" e crie um arquivo chamado "index.html"
 - Adicione este código no arquivo **index.html**
 
 
