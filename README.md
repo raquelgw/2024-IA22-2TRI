@@ -68,7 +68,38 @@ touch src/app.ts
 
 (Adicione uma vírgula na linha que está acima da linha que você acabou de adicionar)
 
-## Criando arquivo inicial do servidor
+## Configurando o banco de dados
+
+Crie um arquivo ` database.ts ` dentro da pasta ` src ` e adicione o seguinte código.
+
+``` import { open, Database } from 'sqlite';
+import sqlite3 from 'sqlite3';
+
+let instance: Database | null = null;
+
+export async function connect() {
+  if (instance !== null) 
+      return instance;
+
+  const db = await open({
+     filename: './src/database.sqlite',
+     driver: sqlite3.Database
+   });
+  
+  await db.exec(`
+    CREATE TABLE IF NOT EXISTS users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT,
+      email TEXT
+    )
+  `);
+
+  instance = db;
+  return db;
+}
+```
+
+## Criando arquivo do servidor
 
 
 - Adicione o seguinte código ao arquivo `src/app.ts`
@@ -129,37 +160,6 @@ app.delete('/users/:id', async (req, res) => {
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
-```
-
-## Configurando o banco de dados
-
-Crie um arquivo ` database.ts ` dentro da pasta ` src ` e adicione o seguinte código.
-
-``` import { open, Database } from 'sqlite';
-import sqlite3 from 'sqlite3';
-
-let instance: Database | null = null;
-
-export async function connect() {
-  if (instance !== null) 
-      return instance;
-
-  const db = await open({
-     filename: './src/database.sqlite',
-     driver: sqlite3.Database
-   });
-  
-  await db.exec(`
-    CREATE TABLE IF NOT EXISTS users (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT,
-      email TEXT
-    )
-  `);
-
-  instance = db;
-  return db;
-}
 ```
 
 ## Inicializando o servidor
