@@ -29,10 +29,6 @@ app.get('/users', async (req, res) => {
   res.json(users);
 });
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
-
 app.put('/users/:id', async (req, res) => {
   const db = await connect();
   const { name, email } = req.body;
@@ -51,4 +47,8 @@ app.delete('/users/:id', async (req, res) => {
   await db.run('DELETE FROM users WHERE id = ?', [id]);
 
   res.json({ message: 'User deleted' });
+});
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
