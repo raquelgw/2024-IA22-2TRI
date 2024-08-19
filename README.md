@@ -319,5 +319,7 @@ Se tudo ocorrer bem, você verá a mensagem `Server running on port 3333` no ter
 
 ```
 
-- Após isto, clique (Ctrl + Shift + G).
-- Clique em "Commit".
+- Pressione Ctrl + Shift + G.
+- Clique em "Commit", adicione uma mensagem e depois confirme clicando no botão no canto superior esquerdo.
+- Clique em "Sync Changes".
+- Atualize a página no navegador.
