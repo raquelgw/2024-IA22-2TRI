@@ -59,7 +59,6 @@ touch src/app.ts
 
 ## Configurando o `package.json`
 
-
 - Adicione o seguinte script ao seu `package.json` dentro de "scripts":
 
 
@@ -67,6 +66,7 @@ touch src/app.ts
   "dev": "npx nodemon src/app.ts"
 ```
 
+(Adicione uma vírgula na linha que está acima da linha que você acabou de adicionar)
 
 ## Criando arquivo inicial do servidor
 
@@ -131,30 +131,6 @@ app.listen(port, () => {
 });
 ```
 
-
-## Inicializando o servidor
-
-
-- No terminal, execute o comando abaixo:
-```bash
-npm run dev
-```
-
-
-Se tudo ocorrer bem, você verá a mensagem `Server running on port 3333` no terminal.
-
-
-## Testando o servidor
-
-
-- Clique em "Ports" ao lado do terminal.
-- Após isto, abra no navegador.
-<img src ="imagens/ports.png">
-<img src ="imagens/browser.png">
-
-
- E você verá a mensagem `Hello World`.
-
 ## Configurando o banco de dados
 
 Crie um arquivo ` database.ts ` dentro da pasta ` src ` e adicione o seguinte código.
@@ -185,6 +161,28 @@ export async function connect() {
 
 }
 ```
+
+## Inicializando o servidor
+
+
+- No terminal, execute o comando abaixo:
+```bash
+npm run dev
+```
+
+Se tudo ocorrer bem, você verá a mensagem `Server running on port 3333` no terminal.
+
+## Testando o servidor
+
+
+- Clique em "Ports" ao lado do terminal.
+- Após isto, abra no navegador.
+<img src ="imagens/ports.png">
+<img src ="imagens/browser.png">
+
+
+ E você verá a mensagem `Hello World`.
+
 ## Configuranado o HTML
 
 - Adicione este código no arquivo **index.html**
