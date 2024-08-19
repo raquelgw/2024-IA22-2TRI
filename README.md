@@ -185,6 +185,6 @@ export async function connect() {
 
 }
 ```
-## Configuranado o `index.html`
+## Configuranado o HTML
 
 
