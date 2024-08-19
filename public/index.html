@@ -1,16 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Cadastro de Usuários</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f4f4f4;
+    }
+
+    button {
+      margin: 0 5px;
+    }
+  </style>
 </head>
 
 <body>
-  <form>
-    <input type="text" name="name" placeholder="Nome">
-    <input type="email" name="email" placeholder="Email">
+  <h1>Cadastro de Usuários</h1>
+
+  <form id="userForm">
+    <input type="text" name="name" placeholder="Nome" required>
+    <input type="email" name="email" placeholder="Email" required>
     <button type="submit">Cadastrar</button>
   </form>
 
@@ -18,83 +44,82 @@
     <thead>
       <tr>
         <th>Id</th>
-        <th>Name</th>
+        <th>Nome</th>
         <th>Email</th>
         <th>Ações</th>
       </tr>
     </thead>
-    <tbody>
-      <!--  -->
+    <tbody id="userTableBody">
+      <!-- Conteúdo será inserido aqui -->
     </tbody>
   </table>
 
   <script>
-    // 
-    const form = document.querySelector('form')
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('userForm');
+      const tbody = document.getElementById('userTableBody');
 
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault()
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-      const name = form.name.value
-      const email = form.email.value
+        const formData = new FormData(form);
+        const name = formData.get('name');
+        const email = formData.get('email');
 
-      await fetch('/users', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email })
-      })
+        await fetch('/users', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email })
+        });
 
-      form.reset()
-      fetchData()
-    })
+        form.reset();
+        loadUsers();
+      });
 
-    // 
-    const tbody = document.querySelector('tbody')
+      async function loadUsers() {
+        const response = await fetch('/users');
+        const users = await response.json();
 
-    async function fetchData() {
-      const resp = await fetch('/users')
-      const data = await resp.json()
+        tbody.innerHTML = '';
 
-      tbody.innerHTML = ''
+        users.forEach(user => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${user.id}</td>
+            <td>${user.name}</td>
+            <td>${user.email}</td>
+            <td>
+              <button class="delete">Excluir</button>
+              <button class="edit">Editar</button>
+            </td>
+          `;
 
-      data.forEach(user => {
-        const tr = document.createElement('tr')
-        tr.innerHTML = `
-          <td>${user.id}</td>
-          <td>${user.name}</td>
-          <td>${user.email}</td>
-          <td>
-            <button class="excluir">excluir</button>
-            <button class="editar">editar</button>
-          </td>
-        `
+          row.querySelector('.delete').addEventListener('click', async () => {
+            await fetch(`/users/${user.id}`, { method: 'DELETE' });
+            row.remove();
+          });
 
-        const btExcluir = tr.querySelector('button.excluir')
-        const btEditar = tr.querySelector('button.editar')
+          row.querySelector('.edit').addEventListener('click', async () => {
+            const newName = prompt('Novo nome:', user.name);
+            const newEmail = prompt('Novo email:', user.email);
 
-        btExcluir.addEventListener('click', async () => {
-          await fetch(`/users/${user.id}`, { method: 'DELETE' })
-          tr.remove()
-        })
+            if (newName && newEmail) {
+              await fetch(`/users/${user.id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: newName, email: newEmail })
+              });
 
-        btEditar.addEventListener('click', async () => {
-          const name = prompt('Novo nome:', user.name)
-          const email = prompt('Novo email:', user.email)
+              loadUsers();
+            }
+          });
 
-          await fetch(`/users/${user.id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, email })
-          })
+          tbody.appendChild(row);
+        });
+      }
 
-          fetchData()
-        })
-
-        tbody.appendChild(tr)
-      })
-    }
-
-    fetchData()
+      loadUsers();
+    });
   </script>
 </body>
 
