@@ -68,100 +68,6 @@ touch src/app.ts
 
 (Adicione uma vírgula na linha que está acima da linha que você acabou de adicionar)
 
-## Configurando o banco de dados
-
-Crie um arquivo ` database.ts ` dentro da pasta ` src ` e adicione o seguinte código.
-
-``` import { open, Database } from 'sqlite';
-import sqlite3 from 'sqlite3';
-
-let instance: Database | null = null;
-
-export async function connect() {
-  if (instance !== null) 
-      return instance;
-
-  const db = await open({
-     filename: './src/database.sqlite',
-     driver: sqlite3.Database
-   });
-  
-  await db.exec(`
-    CREATE TABLE IF NOT EXISTS users (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT,
-      email TEXT
-    )
-  `);
-
-  instance = db;
-  return db;
-}
-```
-
-## Criando arquivo do servidor
-
-
-- Adicione o seguinte código ao arquivo `src/app.ts`
-
-
-```typescript
-import express from 'express';
-import cors from 'cors';
-import { connect } from './database';
-
-const port = 3333;
-const app = express();
-
-app.use(cors());
-app.use(express.json());
-
-app.get('/', (req, res) => {
-  res.send('Hello World');
-});
-
-app.post('/users', async (req, res) => {
-  const db = await connect();
-  const { name, email } = req.body;
-
-  const result = await db.run('INSERT INTO users (name, email) VALUES (?, ?)', [name, email]);
-  const user = await db.get('SELECT * FROM users WHERE id = ?', [result.lastID]);
-
-  res.json(user);
-});
-
-app.get('/users', async (req, res) => {
-  const db = await connect();
-  const users = await db.all('SELECT * FROM users');
-
-  res.json(users);
-});
-
-app.put('/users/:id', async (req, res) => {
-  const db = await connect();
-  const { name, email } = req.body;
-  const { id } = req.params;
-
-  await db.run('UPDATE users SET name = ?, email = ? WHERE id = ?', [name, email, id]);
-  const user = await db.get('SELECT * FROM users WHERE id = ?', [id]);
-
-  res.json(user);
-});
-
-app.delete('/users/:id', async (req, res) => {
-  const db = await connect();
-  const { id } = req.params;
-
-  await db.run('DELETE FROM users WHERE id = ?', [id]);
-
-  res.json({ message: 'User deleted' });
-});
-
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
-```
-
 ## Configuranado o HTML
 
 - Crie uma pasta chamada "public" e crie um arquivo chamado "index.html"
@@ -298,10 +204,103 @@ app.listen(port, () => {
 
 ```
 
+## Criando arquivo do servidor
+
+
+- Adicione o seguinte código ao arquivo `src/app.ts`
+
+
+```typescript
+import express from 'express';
+import cors from 'cors';
+import { connect } from './database';
+
+const port = 3333;
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+app.get('/', (req, res) => {
+  res.send('Hello World');
+});
+
+app.post('/users', async (req, res) => {
+  const db = await connect();
+  const { name, email } = req.body;
+
+  const result = await db.run('INSERT INTO users (name, email) VALUES (?, ?)', [name, email]);
+  const user = await db.get('SELECT * FROM users WHERE id = ?', [result.lastID]);
+
+  res.json(user);
+});
+
+app.get('/users', async (req, res) => {
+  const db = await connect();
+  const users = await db.all('SELECT * FROM users');
+
+  res.json(users);
+});
+
+app.put('/users/:id', async (req, res) => {
+  const db = await connect();
+  const { name, email } = req.body;
+  const { id } = req.params;
+
+  await db.run('UPDATE users SET name = ?, email = ? WHERE id = ?', [name, email, id]);
+  const user = await db.get('SELECT * FROM users WHERE id = ?', [id]);
+
+  res.json(user);
+});
+
+app.delete('/users/:id', async (req, res) => {
+  const db = await connect();
+  const { id } = req.params;
+
+  await db.run('DELETE FROM users WHERE id = ?', [id]);
+
+  res.json({ message: 'User deleted' });
+});
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
+```
+
+## Configurando o banco de dados
+
+Crie um arquivo ` database.ts ` dentro da pasta ` src ` e adicione o seguinte código.
+
+``` import { open, Database } from 'sqlite';
+import sqlite3 from 'sqlite3';
+
+let instance: Database | null = null;
+
+export async function connect() {
+  if (instance !== null) 
+      return instance;
+
+  const db = await open({
+     filename: './src/database.sqlite',
+     driver: sqlite3.Database
+   });
+  
+  await db.exec(`
+    CREATE TABLE IF NOT EXISTS users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT,
+      email TEXT
+    )
+  `);
+
+  instance = db;
+  return db;
+}
+```
+
 - Pressione Ctrl + Shift + G.
 - Clique em "Commit", adicione uma mensagem e depois confirme clicando no botão no canto superior esquerdo.
 - Clique em "Sync Changes".
-
 - No terminal, execute o comando abaixo:
 ```bash
 npm run dev
