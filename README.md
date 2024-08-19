@@ -17,8 +17,7 @@ No GitHub, clique no botão New para criar um novo repositório.
 <img src ="imagens/code.png">
 - Clique em “Create codespace on main” para iniciar o projeto.
 <img src ="imagens/codespace.png">
-- Abra o terminal com o comando CTRL + ‘
-- Execute os seguintes comandos no terminal para configurar o projeto:
+- Abra o terminal com o comando CTRL + ‘ e execute os seguintes comandos no terminal para configurar o projeto:
 
 
 ```bash
@@ -207,7 +206,7 @@ touch src/app.ts
 ## Criando arquivo do servidor
 
 
-- Adicione o seguinte código ao arquivo `src/app.ts`
+- Adicione o seguinte código ao arquivo `app.ts` (que está dentro da pasta src)
 
 
 ```typescript
