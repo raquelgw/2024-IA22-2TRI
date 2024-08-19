@@ -318,3 +318,6 @@ Se tudo ocorrer bem, você verá a mensagem `Server running on port 3333` no ter
 </html>
 
 ```
+
+- Após isto, clique (Ctrl + Shift + G).
+- Clique em "Commit".
