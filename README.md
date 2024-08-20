@@ -72,7 +72,6 @@ touch public/index.html
 
 ## Configuranado o HTML
 
-- Crie uma pasta chamada "public" e crie um arquivo chamado "index.html"
 - Adicione este código no arquivo **index.html**
 
 
@@ -222,10 +221,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-
-app.get('/', (req, res) => {
-  res.send('Hello World');
-});
+app.use(express.static(__dirname + '/../public'))
 
 app.post('/users', async (req, res) => {
   const db = await connect();
@@ -271,7 +267,7 @@ app.listen(port, () => {
 
 ## Configurando o banco de dados
 
-Crie um arquivo ` database.ts ` dentro da pasta ` src ` e adicione o seguinte código.
+Adicione o seguinte código no arquivo database.ts.
 
 ``` 
 import { open, Database } from 'sqlite';
