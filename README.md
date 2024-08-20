@@ -33,7 +33,7 @@ touch public/index.html
 ```
 
 
-## Configuranado o `tsconfig.json`
+## Configurando o `tsconfig.json`
 
 
 - Abra o arquivo tsconfig.json.
@@ -70,7 +70,7 @@ touch public/index.html
 
 (Adicione uma vírgula na linha que está acima da linha que você acabou de adicionar)
 
-## Configuranado o HTML
+## Configurando o HTML
 
 - Adicione este código no arquivo **index.html**
 
@@ -205,7 +205,7 @@ touch public/index.html
 
 ```
 
-## Criando arquivo do servidor
+## Configurando o arquivo do servidor
 
 
 - Adicione o seguinte código ao arquivo `app.ts` (que está dentro da pasta src)
