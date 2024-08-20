@@ -26,7 +26,10 @@ npm install express cors sqlite3 sqlite
 npm install --save-dev typescript nodemon ts-node @types/express @types/cors
 npx tsc --init
 mkdir src
+mkdir public
 touch src/app.ts
+touch src/database.ts
+touch public/index.html
 ```
 
 
