@@ -17,15 +17,15 @@ app.get('/users', async (req, res) => {
 
 app.post('/users', async (req, res) => {
   const db = await connect()
-  const { name, email } = req.body
-  const result = await db.run('INSERT INTO users (name, email) VALUES (?, ?)', [name, email])
+  const { name, email, senha } = req.body
+  const result = await db.run('INSERT INTO users (name, email) VALUES (?, ?)', [name, email, senha])
   const user = await db.get('SELECT * FROM users WHERE id = ?', [result.lastID])
   res.json(user)
 })
 
 app.put('/users/:id', async (req, res) => {
   const db = await connect()
-  const { name, email } = req.body
+  const { name, email, senha } = req.body
   const { id } = req.params
   await db.run('UPDATE users SET name = ?, email = ? WHERE id = ?', [name, email, id])
   const user = await db.get('SELECT * FROM users WHERE id = ?', [id])
